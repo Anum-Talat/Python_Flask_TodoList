@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+        <title>To-do List</title>
+    </head>
+    <body>
+    
+        <div style = "margin-top: 50px;" class="headerimage">
+            <h1 class = "todoHeading">To-do List App</h1>
+            <!-- input form -->
+             <form class="formClass" action="/add" method='post'>
+                <div>
+                    <label class="todoTitleText">Plan your day, add your tasks below!</label><br><br>
+                    <input class="titleTextAndInput" type="text" name="title" placeholder="Add your Task..."><br>
+                </div><br>
+                <button class = "addButton" type = "submit"> Add Task</button>
+             </form>
+             <!-- <a href="/clear"><button class="updateButton" type="submit">Clear All</button></a> -->
+
+             <hr class="dividerLine">
+
+             <!-- render todo list -->
+             {%for row in test%}
+             <div class = "renderedList">
+                {%  if row[2] == 0 %}
+                <p>{{ row[0] }} | {{ row[1] }} | <span class = "notCompleteButton">Not Complete</span></p>
+               
+                {% else %}
+                <p>{{ row[0] }} | {{ row[1] }} | <span class = "notCompleteButton">Complete</span></p>
+                {% endif %}
+         <a href="/update/{{ row[0] }}"><button class="updateButton" type="submit">Mark as Done</button></a>
+                <a href="/delete/{{ row[0] }}"><button class="deleteButton" type="submit">Delete</button></a>
+             </div>
+      {% endfor %}
+
+        </div>
+    </body>
+</html>
