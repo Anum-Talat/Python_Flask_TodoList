@@ -1,7 +1,10 @@
 import sqlite3
 
+
+DATABASE = 'database.db'
+
 def create_DB():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS todo (todo_id INTEGER PRIMARY KEY AUTOINCREMENT,
                        title TEXT NOT NULL,
@@ -13,28 +16,30 @@ def create_DB():
     conn.close()
 
 def viewDB():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM todo')
     rows= cursor.fetchall()
+    conn.close()
     return rows
+    
 
 def insertDB(title):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute("INSERT INTO todo (title, status) VALUES(?, ?)", (title, 0))
     conn.commit()
     conn.close()
 
 def updateTask(id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute("UPDATE todo SET status =1 WHERE todo_id=? ", (id,))
     conn.commit()
     conn.close()
 
 def deleteTask(id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute("DELETE FROM todo WHERE todo_id=?", (id,))
     cursor.execute("SELECT todo_id FROM todo")
@@ -47,7 +52,7 @@ def deleteTask(id):
 
 
 def clear():
-    conn = sqlite3.connect()
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute("UPDATE todo SET todo_id = NULL")
     conn.commit()
@@ -55,7 +60,7 @@ def clear():
 
 
 def clear_all():
-    conn = sqlite3.connect()
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute("DELETE from todo")
     conn.commit()
